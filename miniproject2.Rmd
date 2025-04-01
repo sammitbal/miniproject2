@@ -74,6 +74,14 @@ Question:
 
 
 
+How to interpret coefficients 
 
+
+Step A: Exponentiate: calculate 𝑒^𝛽̂1 = 𝑒−0.0088 ≈ 0.991.
+
+Step B: Interpret: As a person’s age increases by 1 year, we expect the odds of surviving to change by a factor of 0.991.
+
+• Note that the explanation reads “change by” rather than “increase by” or
+“decrease by”
 
 
