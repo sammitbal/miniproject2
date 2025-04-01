@@ -70,7 +70,7 @@ Variable 5 - Sammit
 ## Task 4 - Thadd
 
 
-Question: 
+Question: y = Result (win or loss), x = Score
 
 
 
