@@ -18,7 +18,7 @@ COD_dataset <- read_excel("./CODGames2_mp.xlsx")
 ```
 
 
-## Task 1
+## Task 1 - Sammit
 
 **Question:** Explain why you should avoid using the function na.omit() to remove observations (rows) with missing data for the CODGames2_mp dataset. 
 
