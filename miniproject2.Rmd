@@ -17,6 +17,12 @@ library(fnn)
 
 ## Task 1
 
+**Question:** Explain why you should avoid using the function na.omit() to remove observations (rows) with missing data for the CODGames2_mp dataset. 
+
+- NOTE: If you want to write a great answer, use the function that  we wrote in the notes for counting the number of NA’s and apply that function to each row of the dataset. 
+- (In the notes we applied the function to each column instead of each row.)
+
+
 ## Task 2
 
 ## Task 3
