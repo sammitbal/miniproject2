@@ -14,3 +14,11 @@ knitr::opts_chunk$set(echo = TRUE)
 library(ggplot2)
 library(fnn)
 ```
+
+## Task 1
+
+## Task 2
+
+## Task 3
+
+## Task 4
