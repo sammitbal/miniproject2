@@ -72,6 +72,8 @@ Variable 5 - Sammit
 
 Question: y = Result (win or loss), x = Score
 
+- i.e. "Is the score related to the result (win/loss)?" 
+
 
 
 How to interpret coefficients 
