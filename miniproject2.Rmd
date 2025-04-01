@@ -25,7 +25,7 @@ COD_dataset <- read_excel("./CODGames2_mp.xlsx")
 - NOTE: If you want to write a great answer, use the function that  we wrote in the notes for counting the number of NA’s and apply that function to each row of the dataset. 
 - (In the notes we applied the function to each column instead of each row.)
 
-## Task 2 - 2 for Jason, 2 for Thadd, 1 for Sammit
+## Task 2 - 1 for Jason, 2 for Thadd, 2 for Sammit
 
 ## Task 3 - Jason
 
