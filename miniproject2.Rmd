@@ -13,9 +13,12 @@ knitr::opts_chunk$set(echo = TRUE)
 ```{r}
 library(tidyverse)
 library(FNN)
-
+library(readxl)
 COD_dataset <- read_excel("./CODGames2_mp.xlsx")
 ```
+
+
+# thad num - 17
 
 
 ## Task 1 - Sammit
