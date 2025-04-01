@@ -18,8 +18,6 @@ COD_dataset <- read_excel("./CODGames2_mp.xlsx")
 ```
 
 
-# thad num - 17
-
 
 ## Task 1 - Sammit
 
@@ -40,15 +38,32 @@ Explore 5 more variables of your choice.
 1. Identify the variable, the type of variable (categorical, quantitative, etc.), 
 information about the types of values the variable can take, and the amount of missing data within the variable. 
 2. Report some summary statistics and make a visualization.
-3.1. *If a variable is categorical...*
+3. *If a variable is categorical...*
   1. Make a table of possible values and include counts or proportions. 
   2. Then, make an appropriate plot to show the distribution of values.
-3.2. *If a variable is quantitative...*
+4. *If a variable is quantitative...*
   1. Include some basic summary stats like the mean, median, standard deviation, min, max, etc. 
   2. Make an appropriate plot to show the distribution of 
 values.
-4. For each variable, you should write a few sentences to describe what you have learned about the variable. Incorporate the summary statistics and comment on the amount of missingness into your discussion. Remember, the goal is not to make the plot/calculate the summaries. The goal is to use plots and summaries to gain knowledge from the data.
-5. Place each discussion next to the relevant plot/summary statistics rather than writing code for all 5 variables first followed by all discussion. If you the discussions are not near the plots, it makes it difficult for your audience to follow your explanations without excessive scrolling
+5. For each variable, you should write a few sentences to describe what you have learned about the variable. Incorporate the summary statistics and comment on the amount of missingness into your discussion. Remember, the goal is not to make the plot/calculate the summaries. The goal is to use plots and summaries to gain knowledge from the data.
+6. Place each discussion next to the relevant plot/summary statistics rather than writing code for all 5 variables first followed by all discussion. If you the discussions are not near the plots, it makes it difficult for your audience to follow your explanations without excessive scrolling
+
+
+Variable 1 - Jason
+
+
+Variable 2 - Jason
+
+
+Variable 3 - Thadd
+
+
+Variable 4 - Sammit
+
+
+Variable 5 - Sammit
+
+
 
 ## Task 3 - Jason
 
