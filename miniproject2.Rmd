@@ -28,7 +28,27 @@ COD_dataset <- read_excel("./CODGames2_mp.xlsx")
 - NOTE: If you want to write a great answer, use the function that  we wrote in the notes for counting the number of NA’s and apply that function to each row of the dataset. 
 - (In the notes we applied the function to each column instead of each row.)
 
-## Task 2 - 1 for Jason, 2 for Thadd, 2 for Sammit
+## Task 2 - 2 for Jason, 1 for Thadd, 2 for Sammit
+
+Explore 5 more variables of your choice. 
+
+- You should explore at least one categorical and at least one quantitative variable.
+- Perform a univariate exploration of each variable. (In other words, do not look at the relationship between pairs of variables. Instead, just explore each variable by itself.)
+
+*For each variable, you should...*
+
+1. Identify the variable, the type of variable (categorical, quantitative, etc.), 
+information about the types of values the variable can take, and the amount of missing data within the variable. 
+2. Report some summary statistics and make a visualization.
+3.1. *If a variable is categorical...*
+  1. Make a table of possible values and include counts or proportions. 
+  2. Then, make an appropriate plot to show the distribution of values.
+3.2. *If a variable is quantitative...*
+  1. Include some basic summary stats like the mean, median, standard deviation, min, max, etc. 
+  2. Make an appropriate plot to show the distribution of 
+values.
+4. For each variable, you should write a few sentences to describe what you have learned about the variable. Incorporate the summary statistics and comment on the amount of missingness into your discussion. Remember, the goal is not to make the plot/calculate the summaries. The goal is to use plots and summaries to gain knowledge from the data.
+5. Place each discussion next to the relevant plot/summary statistics rather than writing code for all 5 variables first followed by all discussion. If you the discussions are not near the plots, it makes it difficult for your audience to follow your explanations without excessive scrolling
 
 ## Task 3 - Jason
 
