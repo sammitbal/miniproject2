@@ -28,7 +28,14 @@ We should avoid using the na.omit function because it will remove an unnecessary
 
 
 
+
 ```{r}
+
+countNA <- function(dat){
+  numNA <- sum(is.na(dat))
+  return(numNA)
+}
+
 apply(X = COD_dataset, MARGIN = 2, FUN = countNA)
 ```
 
