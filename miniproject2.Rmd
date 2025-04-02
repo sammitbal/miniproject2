@@ -179,6 +179,62 @@ Why the relative frequencies are not more even or skewed towards `Double XP + 10
 
 ## Task 3 - Jason
 
+**Creating the binary variable `WinLoss`:**
+
+```{r}
+# WinLoss = 1 (Win), 0 (Loss)
+COD_dataset <- COD_dataset %>%
+  # Creating integers PlayerScore and OtherScore
+  separate(Result, 
+           into = c("PlayerScore", "OtherScore"), 
+           sep = "-") %>%
+  mutate(PlayerScore = as.integer(PlayerScore)) %>%
+  mutate(OtherScore = as.integer(OtherScore)) %>%
+  # Restoring "Result" variable
+  mutate(Result = COD_dataset$Result) %>%
+  mutate(WinLoss = ifelse(PlayerScore > OtherScore, 
+                      ifelse(PlayerScore == OtherScore,
+                             "Draw", "Win"), "Loss"))
+```
+
+**Visualization:**
+
+```{r}
+# Aggregate of game state counts per unique game state
+COD_WL_df <- COD_dataset %>%
+  select(WinLoss) %>%
+  group_by(WinLoss) %>%
+  summarize(N = n())
+
+# Adding a "Draw" row if it doesn't exist
+if(nrow(COD_WL_df) == 2) {
+  COD_WL_df <- rbind(COD_WL_df, c("Draw", 0)) %>%
+    mutate(N = as.integer(N))
+} 
+
+# Bar graph visualization of WinLoss counts
+ggplot(data = COD_WL_df,
+       mapping = aes(x = fct_relevel(WinLoss, 
+                         c("Win", "Draw", "Loss")),
+                     y = N, 
+                     fill = WinLoss)) +
+  geom_bar(stat = "identity", 
+           linewidth = 0.5, 
+           color = "darkgray") +
+  scale_fill_manual(values = c("Win" = "lightgreen", 
+                               "Draw" = "lightsalmon", 
+                               "Loss" = "lightcoral")) + 
+  labs(x = "Type of Game State (Win/Draw/Loss)",
+       y = "Frequency of Wins vs Losses",
+       title = "Bar Graph of COD Game State (Win/Draw/Loss) Frequencies")
+
+# Table of XPType frequencies
+COD_dataset %>%
+  select(WinLoss) %>%
+  group_by(WinLoss) %>%
+  summarize(Count = n(), 
+            Percent_of_Total = paste0(round(n()/nrow(COD_dataset)*100,2), "%"))
+```
 
 
 ## Task 4 - Thadd
