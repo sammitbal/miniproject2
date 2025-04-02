@@ -26,9 +26,6 @@ COD_dataset <- read_excel("./CODGames2_mp.xlsx")
 
 We should avoid using the na.omit function because it will remove an unnecessary amount of observations which still have valuable data in them. In this data set we have a lot of unused variables because of the types of game modes that are played in COD. Certain game modes keep track of more data than others. For example Kill Confirmed keeps track of Confirms, Denies, and Objectives. These are variables that are otherwise unused when not playing Kill Confirmed. Overall, na.omit is the wrong function to use because it does not consider the possibility that we don't need every column. We should instead use a function that removes observations based on a column by column basis.  
 
-
-
-
 ```{r}
 
 countNA <- function(dat){
@@ -39,9 +36,9 @@ countNA <- function(dat){
 apply(X = COD_dataset, MARGIN = 2, FUN = countNA)
 ```
 
-
-
 ## Task 2 - 2 for Jason, 1 for Thadd, 2 for Sammit
+
+### Overview
 
 Explore 5 more variables of your choice. 
 
@@ -50,37 +47,137 @@ Explore 5 more variables of your choice.
 
 *For each variable, you should...*
 
-1. Identify the variable, the type of variable (categorical, quantitative, etc.), 
-information about the types of values the variable can take, and the amount of missing data within the variable. 
+1. Identify the variable, the type of variable (categorical, quantitative, etc.), information about the types of values the variable can take, and the amount of missing data within the variable. 
 2. Report some summary statistics and make a visualization.
 3. *If a variable is categorical...*
-  1. Make a table of possible values and include counts or proportions. 
-  2. Then, make an appropriate plot to show the distribution of values.
+    1. Make a table of possible values and include counts or proportions. 
+    2. Then, make an appropriate plot to show the distribution of values.
 4. *If a variable is quantitative...*
-  1. Include some basic summary stats like the mean, median, standard deviation, min, max, etc. 
-  2. Make an appropriate plot to show the distribution of 
+    1. Include some basic summary stats like the mean, median, standard deviation, min, max, etc. 
+    2. Make an appropriate plot to show the distribution of 
 values.
-5. For each variable, you should write a few sentences to describe what you have learned about the variable. Incorporate the summary statistics and comment on the amount of missingness into your discussion. Remember, the goal is not to make the plot/calculate the summaries. The goal is to use plots and summaries to gain knowledge from the data.
+5. For each variable, write a few sentences to describe what you have learned about the variable. Incorporate the summary statistics and comment on the amount of missingness into your discussion. Remember, the goal is not to make the plot/calculate the summaries. The goal is to use plots and summaries to gain knowledge from the data.
 6. Place each discussion next to the relevant plot/summary statistics rather than writing code for all 5 variables first followed by all discussion. If you the discussions are not near the plots, it makes it difficult for your audience to follow your explanations without excessive scrolling
 
 
-Variable 1 - Jason
+
+### Deaths (Variable 1)
+We were curious about the quantitative variable “Deaths”, which seems to refer to the aggregate number of deaths in a game. Before studying the distribution of the variable, let's first check the number of NA values: 
+
+```{r}
+# Filter: Find the number of NA values in Deaths
+COD_dataset %>%
+  filter(is.na(Deaths)) %>%
+  summarize(Number_of_NA = n())
+```
+
+...And the statistics collected from the games recorded contained no NA values for Deaths. 
 
 
-Variable 2 - Jason
+**Summary Statistics:** 
+
+```{r}
+# Summary statistics for Deaths variable
+COD_dataset %>%
+  select(Deaths) %>%
+  summarize(min = min(Deaths),
+    max = max(Deaths),
+    mean = mean(Deaths),
+    median = median(Deaths),
+    sd = sd(Deaths))
+```
 
 
-Variable 3 - Thadd
+**Visualization:**
+
+```{r}
+# Histogram of the variable "Death"'s values to show distribution
+ggplot(data = COD_dataset,
+  mapping = aes(x = Deaths)) +
+  geom_histogram(binwidth = 4, fill = "red", color = "black") +
+  labs(y = "Number of Rounds",
+  title = "Histogram of Death Counts")
+```
 
 
-Variable 4 - Sammit
+**Analysis:**
+
+Let's analyze the distribution: based on "Histogram of Death Counts", we can see a concentration of data roughly at the midpoint between 10 and 20 deaths. This is affirmed by the mean and median values reported by the summary statistic table, which is exactly 15.0 and 15 deaths respectively. 
+
+Regarding concentration, the majority of the data seems to lie between 10 and 22 deaths, with roughly $\frac{64 + 76 + 26}{211} = \frac{166}{211} \approx 78.7\%$ of the data— or roughly 3/4ths of the data— lying in this center point. The standard deviation affirms this, suggesting a normal distribution would contain roughly two-thirds of the data between the range 9.87 - 20.13. 
+
+Overall, this distribution is reminiscent of a unimodal, normal distribution with just a slight rightwards skew with a small fraction ($\sim 5$) rounds exceeding 25 Deaths. 
 
 
-Variable 5 - Sammit
+
+### XPType (Variable 2)
+
+For the second variable, we considered the categorical variable "XPType", which seems to refer to some sort of "bonus" in COD where players would presumably receive a multiplicative/additive/otherwise bonus to their XP gains. 
+
+Based on the dataset, there are 2 different types of XPType:
+
+```{r}
+# Table of types of XPType
+COD_dataset %>%
+  select(XPType) %>%
+  distinct()
+```
+
+The statistics collected from the rounds recorded contained no NA values for XPType:
+
+```{r}
+# Filter: Find the number of NA values in XPType
+COD_dataset %>%
+  filter(is.na(XPType)) %>%
+  summarize(Number_of_NA = n())
+```
+
+**Visualization:**
+
+```{r}
+# Aggregate of XPType counts per unique XPType
+COD_PW_df <- COD_dataset %>%
+  select(XPType) %>%
+  group_by(XPType) %>%
+  summarize(N = n())
+
+# Bar graph visualization of XPType counts
+ggplot(data = COD_PW_df,
+       mapping = aes(x = XPType, y = N)) +
+  geom_bar(stat = "identity", fill = "lightgreen", 
+           linewidth = 0.5, colour = "darkgray") +
+  labs(y = "Frequency of XPType",
+       title = "Bar graph of COD XPType frequencies")
+
+# Table of XPType frequencies
+COD_dataset %>%
+  select(XPType) %>%
+  group_by(XPType) %>%
+  summarize(Count = n(), 
+            Percent_of_Total = paste0(round(n()/nrow(COD_dataset)*100,2), "%"))
+```
+
+**Analysis:** 
+
+There notably isn't enough varity in the sorts of XP bonuses (XPType) to argue any sort of distribution (except, perhaps, Bernoulli). 
+
+Instead, the relative frequency seems to be roughly 1:3, with a little less than 2/5ths (38.86%, to be exact) of rounds played with `Double XP + 10%` XPType and the remainder (a little more than 3/5ths, 61.14% to be exact) of rounds played with a `10% Boost` XPType.The exact counts are that 129 out of 211 rounds were played with a `10% Boost`, and 82 out of 211 rounds were played wiht `Double XP + 10%`.
+
+Why the relative frequencies are not more even or skewed towards `Double XP + 10%`, in spite of this bonus seeming mathematically better with respect to XP gain, is perhaps due to relative availability— the bonus might not be available for the majority of times when players can actually play. 
+
+### Variable 3 - Thadd
+
+
+### Variable 4 - Sammit
+
+
+#### Variable 5 - Sammit
 
 
 
 ## Task 3 - Jason
+
+
 
 ## Task 4 - Thadd
 
@@ -98,7 +195,4 @@ Step A: Exponentiate: calculate 𝑒^𝛽̂1 = 𝑒−0.0088 ≈ 0.991.
 
 Step B: Interpret: As a person’s age increases by 1 year, we expect the odds of surviving to change by a factor of 0.991.
 
-• Note that the explanation reads “change by” rather than “increase by” or
-“decrease by”
-
-
+• Note that the explanation reads “change by” rather than “increase by” or “decrease by”
