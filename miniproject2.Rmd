@@ -1,6 +1,6 @@
 ---
-title: "miniproject2"
-author: "Sammit Bal", "'
+title: "STAT380_Mini-Project2"
+author: "Sammit Bal, Thaddeus Poff, Jason Zhang"
 date: "2025-04-01"
 output: html_document
 ---
