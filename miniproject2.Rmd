@@ -224,6 +224,7 @@ ggplot(data = COD_WL_df,
   scale_fill_manual(values = c("Win" = "lightgreen", 
                                "Draw" = "lightsalmon", 
                                "Loss" = "lightcoral")) + 
+  scale_y_continuous(breaks = seq(0, 120, by = 20)) + 
   labs(x = "Type of Game State (Win/Draw/Loss)",
        y = "Frequency of Wins vs Losses",
        title = "Bar Graph of COD Game State (Win/Draw/Loss) Frequencies")
