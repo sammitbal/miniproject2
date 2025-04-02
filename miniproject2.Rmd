@@ -161,7 +161,7 @@ COD_dataset %>%
 
 **Analysis:** 
 
-There notably isn't enough varity in the sorts of XP bonuses (XPType) to argue any sort of distribution (except, perhaps, Bernoulli). 
+There notably isn't enough variety in the sorts of XP bonuses (XPType) to argue any sort of distribution (except, perhaps, Bernoulli). 
 
 Instead, the relative frequency seems to be roughly 1:3, with a little less than 2/5ths (38.86%, to be exact) of rounds played with `Double XP + 10%` XPType and the remainder (a little more than 3/5ths, 61.14% to be exact) of rounds played with a `10% Boost` XPType.The exact counts are that 129 out of 211 rounds were played with a `10% Boost`, and 82 out of 211 rounds were played wiht `Double XP + 10%`.
 
@@ -170,10 +170,110 @@ Why the relative frequencies are not more even or skewed towards `Double XP + 10
 ### Variable 3 - Thadd
 
 
-### Variable 4 - Sammit
+### Damage (Variable 4)
 
 
-#### Variable 5 - Sammit
+We were curious about the quantitative variable “Damage”, which refers to the total amount of damage dealt to opposing players with weapons. The statistics collected from the data set contained no NA values for Damage.
+
+
+```{r}
+# Filter: Find the number of NA values in Damage
+COD_dataset %>%
+  filter(is.na(Damage)) %>%
+  summarize(Number_of_NA = n())
+```
+
+
+**Summary Statistics:** 
+
+```{r}
+# Summary statistics for Damage variable
+COD_dataset %>%
+  select(Damage) %>%
+  summarize(min = min(Damage),
+    max = max(Damage),
+    mean = mean(Damage),
+    median = median(Damage),
+    sd = sd(Damage),
+    Q1 = quantile(Damage, 0.25),
+    Q3 = quantile(Damage, 0.75))
+```
+
+
+**Visualization:**
+
+```{r}
+# Histogram of the variable "Damage" values to show distribution
+ggplot(data = COD_dataset,
+  mapping = aes(x = Damage)) +
+  geom_histogram(binwidth = 15, fill = "red", color = "black") +
+  labs(y = "Number of Rounds",
+  title = "Histogram of Damage Dealt")
+```
+
+
+**Analysis:**
+
+Based on the above histogram, we can see a concentration of data between 250 and 550 damage. This is affirmed by the mean and median values reported by the summary statistic table, which is at 415 and 397 damage respectively. We also see an outlier value at 960. Overall, this distribution is unimodal, has a normal distribution with a slight right skew. 
+
+
+### GameType (Variable 5)
+
+
+For the fifth variable, we explored the categorical variable "GameType", which refers to the game mode or a new set of objectives the player is meant to accomplish. Game modes can add new more challenging aspects to the game. For example, in Hardpoint an objective is created and your team must control the point for a certain period of time in order to win or score points. 
+
+
+Based on the dataset, there are 4 different types of GameType's:
+
+```{r}
+# Table of types of GameType
+COD_dataset %>%
+  select(GameType) %>%
+  distinct()
+```
+
+The statistics collected from the rounds recorded contained no NA values for XPType:
+
+```{r}
+#Find the number of NA values in GameType
+COD_dataset %>%
+  filter(is.na(GameType)) %>%
+  summarize(Number_of_NA = n())
+```
+
+**Visualization:**
+
+```{r}
+# Aggregate of GameType counts per unique GameType
+COD_PW_df <- COD_dataset %>%
+  select(GameType) %>%
+  group_by(GameType) %>%
+  summarize(N = n())
+
+# Bar graph visualization of GameType counts
+ggplot(data = COD_PW_df,
+       mapping = aes(x = GameType, y = N)) +
+  geom_bar(stat = "identity", fill = "lightgreen", 
+           linewidth = 0.5, colour = "darkgray") +
+  labs(y = "Frequency of GameType",
+       title = "Bar graph of COD GameType frequencies")
+
+# Table of GameType frequencies
+COD_dataset %>%
+  select(GameType) %>%
+  group_by(GameType) %>%
+  summarize(Count = n(), 
+            Percent_of_Total = paste0(round(n()/nrow(COD_dataset)*100,2), "%"))
+```
+
+**Analysis:** 
+
+As we can see there isn't much variety in GameType, this could be for a variety of reasons. Some could include it being the default game mode recommended to players. 
+
+Instead, the relative frequency seems to be roughly 1:3, with a little less than 2/5ths (38.86%, to be exact) of rounds played with `Double XP + 10%` XPType and the remainder (a little more than 3/5ths, 61.14% to be exact) of rounds played with a `10% Boost` XPType.The exact counts are that 129 out of 211 rounds were played with a `10% Boost`, and 82 out of 211 rounds were played wiht `Double XP + 10%`.
+
+Why the relative frequencies are not more even or skewed towards `Double XP + 10%`, in spite of this bonus seeming mathematically better with respect to XP gain, is perhaps due to relative availability— the bonus might not be available for the majority of times when players can actually play. 
+
 
 
 
