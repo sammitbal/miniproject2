@@ -23,8 +23,17 @@ COD_dataset <- read_excel("./CODGames2_mp.xlsx")
 
 **Question:** Explain why you should avoid using the function na.omit() to remove observations (rows) with missing data for the CODGames2_mp dataset. 
 
-- NOTE: If you want to write a great answer, use the function that  we wrote in the notes for counting the number of NA’s and apply that function to each row of the dataset. 
-- (In the notes we applied the function to each column instead of each row.)
+
+
+We should avoid using the na.omit function because it will remove an unnecessary amount of observations which still have valuable data in them. In this data set we have a lot of unused variables because of the types of game modes that are played in COD. Certain game modes keep track of more data than others. For example Kill Confirmed keeps track of Confirms, Denies, and Objectives. These are variables that are otherwise unused when not playing Kill Confirmed. Overall, na.omit is the wrong function to use because it does not consider the possibility that we don't need every column. We should instead use a function that removes observations based on a column by column basis.  
+
+
+
+```{r}
+apply(X = COD_dataset, MARGIN = 2, FUN = countNA)
+```
+
+
 
 ## Task 2 - 2 for Jason, 1 for Thadd, 2 for Sammit
 
