@@ -378,9 +378,9 @@ Question: y = Result (win or loss), x = Score
 
 **Step 1: Calculate `logit`:** Calculate logit form (e.g. $\beta_0 + \beta_1 x_{i,1}$)
 
-**Step 2 Convert `logit` to `odds`:** Take $e$ to this result (i.e. $e^{\beta_0 + \beta_1 x_{i,1}} = e^{-????} \approx ????$)
+**Step 2: Convert `logit` to `odds`:** Take $e$ to this result (i.e. $e^{\beta_0 + \beta_1 x_{i,1}} = e^{-????} \approx ????$)
 
-**Step 3: Interpret:** As a person’s [insert VAR] increases by 1 [insert UNIT], we expect the odds of [insert SUCCESS] to change by a factor of [insert FACTOR (ODDS)].
+**Step 3: Interpret the Slope:** As a person’s [insert VAR] increases by 1 [insert UNIT], we expect the odds of [insert SUCCESS] to change by a factor of [insert FACTOR (ODDS)].
 
 - Note that the explanation reads “change by” rather than “increase by” or “decrease by”
 
@@ -391,11 +391,20 @@ Question: y = Result (win or loss), x = Score
  - We expect the odds of surviving to change by <u>a factor of</u> 0.991. 
  - We expect the <u>odds of surviving to decrease by</u> 0.9%. 
 
+**Step 4 (You can merge this into step 3 if you want): Answer the Model Using the Results:** Put the model into context!
+
+1. Plug in the min/max, averages, and other statistics into the $\beta_0$ and $\beta_1$s in the equation, and
+2. Interpret the results. Can you answer the question, even?
+
+- NOTE: Part of your grade for this question will be determined based on whether your question is a valid question about inference and whether your analysis allows you to answer the question.
+
+- (my note): ...meaning you should note & provide explanation if the results DON'T allow you to answer the question.
+
 
 
 
 ```{r}
-# A glimpse at Score (REMOVE THIS ONCE READ)
+# A glimpse at Score (USED FOR STEP 4)
 COD_dataset %>%
   select(Score) %>%
   summarize(min = min(Score),

@@ -371,9 +371,10 @@ display: none;
 ## ✖ dplyr::lag()    masks stats::lag()
 ## ℹ Use the conflicted package (&lt;http://conflicted.r-lib.org/&gt;) to force all conflicts to become errors</code></pre>
 <pre class="r"><code>library(FNN)</code></pre>
-<pre><code>## Warning: package &#39;FNN&#39; was built under R version 4.4.2</code></pre>
-<pre class="r"><code>library(readxl)
-COD_dataset &lt;- read_excel(&quot;./CODGames2_mp.xlsx&quot;)</code></pre>
+<pre><code>## Warning: package &#39;FNN&#39; was built under R version 4.4.3</code></pre>
+<pre class="r"><code>library(readxl)</code></pre>
+<pre><code>## Warning: package &#39;readxl&#39; was built under R version 4.4.2</code></pre>
+<pre class="r"><code>COD_dataset &lt;- read_excel(&quot;./CODGames2_mp.xlsx&quot;)</code></pre>
 </div>
 <div id="task-1" class="section level2">
 <h2>Task 1</h2>
@@ -765,13 +766,13 @@ gist of the question) “Is the score related to the result
 <p><strong>Step 1: Calculate <code>logit</code>:</strong> Calculate
 logit form (e.g. <span class="math inline">\(\beta_0 + \beta_1
 x_{i,1}\)</span>)</p>
-<p><strong>Step 2 Convert <code>logit</code> to
+<p><strong>Step 2: Convert <code>logit</code> to
 <code>odds</code>:</strong> Take <span class="math inline">\(e\)</span>
 to this result (i.e. <span class="math inline">\(e^{\beta_0 + \beta_1
 x_{i,1}} = e^{-????} \approx ????\)</span>)</p>
-<p><strong>Step 3: Interpret:</strong> As a person’s [insert VAR]
-increases by 1 [insert UNIT], we expect the odds of [insert SUCCESS] to
-change by a factor of [insert FACTOR (ODDS)].</p>
+<p><strong>Step 3: Interpret the Slope:</strong> As a person’s [insert
+VAR] increases by 1 [insert UNIT], we expect the odds of [insert
+SUCCESS] to change by a factor of [insert FACTOR (ODDS)].</p>
 <ul>
 <li>Note that the explanation reads “change by” rather than “increase
 by” or “decrease by”</li>
@@ -783,7 +784,20 @@ by” or “decrease by”</li>
 0.991.</li>
 <li>We expect the <u>odds of surviving to decrease by</u> 0.9%.</li>
 </ul>
-<pre class="r"><code># A glimpse at Score (REMOVE THIS ONCE READ)
+<p><strong>Step 4 (You can merge this into step 3 if you want): Answer
+the Model Using the Results:</strong> Put the model into context!</p>
+<ol style="list-style-type: decimal">
+<li>Plug in the min/max, averages, and other statistics into the <span class="math inline">\(\beta_0\)</span> and <span class="math inline">\(\beta_1\)</span>s in the equation, and</li>
+<li>Interpret the results. Can you answer the question, even?</li>
+</ol>
+<ul>
+<li><p>NOTE: Part of your grade for this question will be determined
+based on whether your question is a valid question about inference and
+whether your analysis allows you to answer the question.</p></li>
+<li><p>(my note): …meaning you should note &amp; provide explanation if
+the results DON’T allow you to answer the question.</p></li>
+</ul>
+<pre class="r"><code># A glimpse at Score (USED FOR STEP 4)
 COD_dataset %&gt;%
   select(Score) %&gt;%
   summarize(min = min(Score),
