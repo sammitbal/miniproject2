@@ -369,7 +369,7 @@ COD_dataset %>%
 
 Question: y = Result (win or loss), x = Score
 
-**Our Group's Question:** (Reword this, but this is the gist of the question) "Is the score related to the result (win/loss)?" 
+**Our Group's Question:** "How is the score related to the result (win/loss)?" 
 
 
 
