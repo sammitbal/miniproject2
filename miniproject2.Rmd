@@ -11,6 +11,7 @@ knitr::opts_chunk$set(echo = TRUE)
 
 ## Front Matter
 ```{r}
+remove(list = ls())
 library(tidyverse)
 library(FNN)
 library(readxl)
@@ -168,7 +169,34 @@ Instead, the relative frequency seems to be roughly 1:3, with a little less than
 Why the relative frequencies are not more even or skewed towards `Double XP + 10%`, in spite of this bonus seeming mathematically better with respect to XP gain, is perhaps due to relative availability— the bonus might not be available for the majority of times when players can actually play. 
 
 
-### Variable 3 - Thadd
+### FullPartial - Thadd
+
+We are interested in the categorical variable 'FullPartial' which describes if the player played a full game, or only a partial game. 
+
+```{r}
+Cod_FP <- 
+  COD_dataset %>%
+  select(FullPartial) %>%
+  group_by(FullPartial) %>%
+  summarize(count = n()) 
+
+
+
+ggplot(data = Cod_FP,
+       mapping = aes(x = FullPartial, y = count)) +
+  geom_bar(stat = "identity", fill = "blue", 
+           linewidth = 0.5, colour = "red") +
+  labs(y = "Frequency of Games Played",
+       title = "Bar graph of Full or Partial COD Games Played")
+
+COD_dataset %>%
+  select(FullPartial) %>%
+  group_by(FullPartial) %>%
+  summarize(Count = n(), 
+            Percent_of_Total = paste0(round(n()/nrow(COD_dataset)*100,2), "%"))
+```
+
+As expected, most players that were surveyed played full games. For the players that played partial games, we are still unsure at what point they joined the game. Whether that be in the beginning, middle, or end of the game. We can only make an inference based on their eliminations/deaths/score from that game played on when they could have joined the match. 
 
 
 ### Damage (Variable 4)
