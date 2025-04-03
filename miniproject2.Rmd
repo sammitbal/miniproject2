@@ -38,7 +38,7 @@ countNA <- function(dat){
 apply(X = COD_dataset, MARGIN = 2, FUN = countNA)
 ```
 
-## Task 2 - 2 for Jason, 1 for Thadd, 2 for Sammit
+## Task 2
 
 ### Overview
 
@@ -268,16 +268,13 @@ COD_dataset %>%
 
 **Analysis:** 
 
-As we can see there isn't much variety in GameType, this could be for a variety of reasons. Some could include it being the default game mode recommended to players. 
+As we can see there isn't much variety in GameType, this could be for a variety of reasons. One reason could be because it's the default game mode recommended to players. Another explanation could be its simplicity, to win in this game mode you simply have to have more eliminations than the other team. For a game with a large casual player base, maybe picking these harder isn't as fun or appealing which could explain why TDM is the most dominate GameType in our dataset. 
 
-Instead, the relative frequency seems to be roughly 1:3, with a little less than 2/5ths (38.86%, to be exact) of rounds played with `Double XP + 10%` XPType and the remainder (a little more than 3/5ths, 61.14% to be exact) of rounds played with a `10% Boost` XPType.The exact counts are that 129 out of 211 rounds were played with a `10% Boost`, and 82 out of 211 rounds were played wiht `Double XP + 10%`.
-
-Why the relative frequencies are not more even or skewed towards `Double XP + 10%`, in spite of this bonus seeming mathematically better with respect to XP gain, is perhaps due to relative availability— the bonus might not be available for the majority of times when players can actually play. 
+Overall, we can assume that Hard Core - Team Death Match (TDM) is the most popular game mode with HC - Hardpoint after it and HC - Domination and HC - Kill Confirmed equal in popularity. 
 
 
 
-
-## Task 3 - Jason
+## Task 3
 
 **Creating the binary variable `WinLoss`:**
 
@@ -338,7 +335,7 @@ COD_dataset %>%
 ```
 
 
-## Task 4 - Thadd
+## Task 4
 
 
 Question: y = Result (win or loss), x = Score
