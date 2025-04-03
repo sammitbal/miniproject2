@@ -372,3 +372,9 @@ modelglm <- glm(WinLossNum ~ Score, family = binomial, data = COD_dataset)
 summary(modelglm)
 ```
 
+```{r}
+exp(1.689e-04)
+```
+
+As a teams score increases by 1 point, we expect the odds of winning to change by a factor of 1.000169.
+
