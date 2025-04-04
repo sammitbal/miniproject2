@@ -391,18 +391,18 @@ COD_dataset <-
   COD_dataset %>%
   mutate(WinLossNum = ifelse(WinLoss == "Win", 1, 0))
 
-# Greating generalized linear regresison model
+# Creating generalized linear regression model
 modelglm <- glm(WinLossNum ~ Score, family = binomial, data = COD_dataset)
 summary(modelglm)
 ```
 
 - `Intercept` $= -0.3324$, `Score` $= 0.0001689$
 
-- *Note:* In spite of the `Pr(>|z|)` of the Score and Intercept exceeding the $\alpha$ value of $0.05$, <u>we still will use these figures</u>, as an $\alpha$ value of $0.05$ is inappropriate for predicting categorical variables, and specifically for slope, an $\alpha$ value of $0.15$ or greater would be appropriate, of which this probability exceeds (is below).  
+- *Note:* In spite of the `Pr(>|z|)` of the Score and Intercept exceeding the $\alpha$ value of $0.05$, <u>we still will use these figures</u>, as an $\alpha$ value of $0.05$ is too low for predicting categorical variables. Specifically for slope, an $\alpha$ value of $0.15$ or greater would be appropriate, which this probability exceeds (is below).  
 
 *Calculation for `logit` form:* 
 
-$$\large{\log(\text{odds}_{WinLoss}) = -0.3324 + 0.0001689 \cdot \text{Score}}$$
+$$\large{\log(\text{Odds}_{WinLoss}) = -0.3324 + 0.0001689 \cdot \text{Score}}$$
 
 
 #### **Step 2: Convert `logit` to `odds`:**
@@ -415,9 +415,9 @@ $$
 }
 $$
 
-*Slope:* $\large{e^{0.0001689} \approx 1.00016891426 (+0.01689\%)}$
+- *Slope:* $\large{e^{0.0001689} \approx 1.00016891426 (+0.01689\%)}$
 
-*Interpretation of* ***ODDS:*** As a person’s Score increases by 1 point, we expect the <u>odds</u> of winning to change by a factor of 1.00016891426, meaning that their odds of winning <u>increases by 0.01689%</u>. 
+- *Interpretation of* ***ODDS:*** As a person’s Score increases by 1 point, we expect the <u>odds</u> of winning to change by a factor of 1.00016891426, meaning that their odds of winning <u>increases by 0.01689%</u>. 
 
 #### **Step 3: Converting `odds` to `probability`:**
 
@@ -430,6 +430,7 @@ $$
 #### **Step 4: Interpreting the Results and Answering the Question:** 
 
 ```{r}
+# prob_win: Applies the formula in Step 3 to summary stats of Score
 intercept <- -0.3324
 slope <- 0.0001689
 
@@ -437,7 +438,7 @@ prob_win <- function(Score) exp(intercept + slope * Score) /
                             (1 + exp(intercept + slope * Score))
 
 
-# A glimpse at Score
+# Viewing summary statistics of prob_win
 COD_dataset %>%
   select(Score) %>%
   summarize(
@@ -452,6 +453,8 @@ COD_dataset %>%
 
 **Interpretation of the Probabilities:** Based on the table above--- which measures the distributions of winning by aggregating the probabilities of winning of each Score--- we can see that the majority of these summary statistics, starting from the 1st quartile, exceed a 50% probability of winning the game. Basically, Players in this data set's win rate is pretty high, regardless of their score. 
 
-And while this is an interesting observation, this does not answer the question. Rather, the difference between the `min()` Score's probability of winning versus the `Q1`, `mean`/`median`, `Q3`, and `max` indicates an <u>increase in the chance of winning</u> as the score of the Player in this game rises (in comparison to the Scores in other games in the data set). Combine that with the calculations in Step 2, which suggest  And therefore, with reasonable certainty, we can answer the question: 
+And while this is an interesting observation, this does not answer the question. Rather, the difference between the `min()` Score's probability of winning versus the `Q1`, `mean`/`median`, `Q3`, and `max` indicates an <u>increase in the chance of winning</u> as the score of the Player in this game rises (in comparison to the Scores in other games in the data set). 
+
+Combine that with the calculations in Step 2, which provides a slope with  And therefore, with reasonable certainty, we can answer the question: 
 
 The Score *does* help predict the result of a round (win/loss)--- as Score increases, their probability of winning increases. 

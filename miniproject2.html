@@ -820,7 +820,7 @@ COD_dataset &lt;-
   COD_dataset %&gt;%
   mutate(WinLossNum = ifelse(WinLoss == &quot;Win&quot;, 1, 0))
 
-# Greating generalized linear regresison model
+# Creating generalized linear regression model
 modelglm &lt;- glm(WinLossNum ~ Score, family = binomial, data = COD_dataset)
 summary(modelglm)</code></pre>
 <pre><code>## 
@@ -848,12 +848,12 @@ summary(modelglm)</code></pre>
 <li><p><em>Note:</em> In spite of the <code>Pr(&gt;|z|)</code> of the
 Score and Intercept exceeding the <span class="math inline">\(\alpha\)</span> value of <span class="math inline">\(0.05\)</span>, <u>we still will use these
 figures</u>, as an <span class="math inline">\(\alpha\)</span> value of
-<span class="math inline">\(0.05\)</span> is inappropriate for
-predicting categorical variables, and specifically for slope, an <span class="math inline">\(\alpha\)</span> value of <span class="math inline">\(0.15\)</span> or greater would be appropriate, of
+<span class="math inline">\(0.05\)</span> is too low for predicting
+categorical variables. Specifically for slope, an <span class="math inline">\(\alpha\)</span> value of <span class="math inline">\(0.15\)</span> or greater would be appropriate,
 which this probability exceeds (is below).</p></li>
 </ul>
 <p><em>Calculation for <code>logit</code> form:</em></p>
-<p><span class="math display">\[\large{\log(\text{odds}_{WinLoss}) =
+<p><span class="math display">\[\large{\log(\text{Odds}_{WinLoss}) =
 -0.3324 + 0.0001689 \cdot \text{Score}}\]</span></p>
 </div>
 <div id="step-2-convert-logit-to-odds" class="section level4">
@@ -867,12 +867,14 @@ which this probability exceeds (is below).</p></li>
 \end{align}
 }
 \]</span></p>
-<p><em>Slope:</em> <span class="math inline">\(\large{e^{0.0001689}
-\approx 1.00016891426 (+0.01689\%)}\)</span></p>
-<p><em>Interpretation of</em> <strong><em>ODDS:</em></strong> As a
+<ul>
+<li><p><em>Slope:</em> <span class="math inline">\(\large{e^{0.0001689}
+\approx 1.00016891426 (+0.01689\%)}\)</span></p></li>
+<li><p><em>Interpretation of</em> <strong><em>ODDS:</em></strong> As a
 person’s Score increases by 1 point, we expect the <u>odds</u> of
 winning to change by a factor of 1.00016891426, meaning that their odds
-of winning <u>increases by 0.01689%</u>.</p>
+of winning <u>increases by 0.01689%</u>.</p></li>
+</ul>
 </div>
 <div id="step-3-converting-odds-to-probability" class="section level4">
 <h4><strong>Step 3: Converting <code>odds</code> to
@@ -887,14 +889,15 @@ of winning <u>increases by 0.01689%</u>.</p>
 <div id="step-4-interpreting-the-results-and-answering-the-question" class="section level4">
 <h4><strong>Step 4: Interpreting the Results and Answering the
 Question:</strong></h4>
-<pre class="r"><code>intercept &lt;- -0.3324
+<pre class="r"><code># prob_win: Applies the formula in Step 3 to summary stats of Score
+intercept &lt;- -0.3324
 slope &lt;- 0.0001689
 
 prob_win &lt;- function(Score) exp(intercept + slope * Score) / 
                             (1 + exp(intercept + slope * Score))
 
 
-# A glimpse at Score
+# Viewing summary statistics of prob_win
 COD_dataset %&gt;%
   select(Score) %&gt;%
   summarize(
@@ -921,9 +924,10 @@ Score’s probability of winning versus the <code>Q1</code>,
 <code>mean</code>/<code>median</code>, <code>Q3</code>, and
 <code>max</code> indicates an <u>increase in the chance of winning</u>
 as the score of the Player in this game rises (in comparison to the
-Scores in other games in the data set). Combine that with the
-calculations in Step 2, which suggest And therefore, with reasonable
-certainty, we can answer the question:</p>
+Scores in other games in the data set).</p>
+<p>Combine that with the calculations in Step 2, which provides a slope
+with And therefore, with reasonable certainty, we can answer the
+question:</p>
 <p>The Score <em>does</em> help predict the result of a round
 (win/loss)— as Score increases, their probability of winning
 increases.</p>
