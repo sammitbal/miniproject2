@@ -912,12 +912,13 @@ COD_dataset %&gt;%
 ##     min   max  mean median    sd    Q1    Q3
 ##   &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;  &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;
 ## 1 0.422 0.712 0.541  0.534 0.479 0.501 0.568</code></pre>
-<p><strong>Interpretation of the Probabilities:</strong> Based on the
-table above— which measures the distributions of winning by aggregating
-the probabilities of winning of each Score— we can see that the majority
-of these summary statistics, starting from the 1st quartile, exceed a
-50% probability of winning the game. Basically, Players in this data
-set’s win rate is pretty high, regardless of their score.</p>
+<p><strong>Interpretation of the Probabilities:</strong></p>
+<p>Based on the table above— which measures the distributions of winning
+by aggregating the probabilities of winning of each Score— we can see
+that the majority of these summary statistics, starting from the 1st
+quartile, exceed a 50% probability of winning the game. Basically,
+Players in this data set’s win rate is pretty high, regardless of their
+score.</p>
 <p>And while this is an interesting observation, this does not answer
 the question. Rather, the difference between the <code>min()</code>
 Score’s probability of winning versus the <code>Q1</code>,
@@ -925,6 +926,7 @@ Score’s probability of winning versus the <code>Q1</code>,
 <code>max</code> indicates an <u>increase in the chance of winning</u>
 as the score of the Player in this game rises (in comparison to the
 Scores in other games in the data set).</p>
+<p><strong>Answering the Question:</strong></p>
 <p>Combine that evidence with the calculations in Step 2, which use a
 slope that <u>significantly exceeds zero</u> (on the scale of Score
 values, which are in the thousands), and therefore we can answer the
