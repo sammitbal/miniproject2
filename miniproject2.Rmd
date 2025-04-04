@@ -169,9 +169,20 @@ Instead, the relative frequency seems to be roughly 1:3, with a little less than
 Why the relative frequencies are not more even or skewed towards `Double XP + 10%`, in spite of this bonus seeming mathematically better with respect to XP gain, is perhaps due to relative availability— the bonus might not be available for the majority of times when players can actually play. 
 
 
-### FullPartial - Thadd
+### FullPartial (Variable 3)
 
-We are interested in the categorical variable 'FullPartial' which describes if the player played a full game, or only a partial game. 
+We are interested in the categorical variable `FullPartial` which describes if the player played a full game, or only a partial game. 
+
+The statistics collected from the rounds recorded contained no NA values for FullPartial:
+
+```{r}
+# Filter: Find the number of NA values in FullPartial
+COD_dataset %>%
+  filter(is.na(FullPartial)) %>%
+  summarize(Number_of_NA = n())
+```
+
+**Visualization:**
 
 ```{r}
 Cod_FP <- 
@@ -181,13 +192,13 @@ Cod_FP <-
   summarize(count = n()) 
 
 
-
 ggplot(data = Cod_FP,
        mapping = aes(x = FullPartial, y = count)) +
   geom_bar(stat = "identity", fill = "blue", 
            linewidth = 0.5, colour = "red") +
   labs(y = "Frequency of Games Played",
        title = "Bar graph of Full or Partial COD Games Played")
+
 
 COD_dataset %>%
   select(FullPartial) %>%
@@ -196,7 +207,9 @@ COD_dataset %>%
             Percent_of_Total = paste0(round(n()/nrow(COD_dataset)*100,2), "%"))
 ```
 
-As expected, most players that were surveyed played full games. For the players that played partial games, we are still unsure at what point they joined the game. Whether that be in the beginning, middle, or end of the game. We can only make an inference based on their eliminations/deaths/score from that game played on when they could have joined the match. 
+**Analysis:**
+
+Most players that were surveyed in this dataset played full games. For the players that played partial games, we are still unsure at what point they joined the game (whether that be in the beginning, middle, or end of the game, the dataset doesn't make a distinction). It's worth noting that we might be able to make an inference, based on their eliminations/deaths/score from that game played, for what (average) percentage of the game partial-game players played though. 
 
 
 ### Damage (Variable 4)
@@ -373,7 +386,7 @@ Question: y = Result (win or loss), x = Score
 
 
 
-**How to interpret coefficients:**
+### Suggested Outline
 
 
 **Step 1: Calculate `logit`:** Calculate logit form (e.g. $\beta_0 + \beta_1 x_{i,1}$)

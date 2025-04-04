@@ -372,9 +372,10 @@ library(tidyverse)</code></pre>
 ## ✖ dplyr::lag()    masks stats::lag()
 ## ℹ Use the conflicted package (&lt;http://conflicted.r-lib.org/&gt;) to force all conflicts to become errors</code></pre>
 <pre class="r"><code>library(FNN)</code></pre>
-<pre><code>## Warning: package &#39;FNN&#39; was built under R version 4.4.2</code></pre>
-<pre class="r"><code>library(readxl)
-COD_dataset &lt;- read_excel(&quot;./CODGames2_mp.xlsx&quot;)</code></pre>
+<pre><code>## Warning: package &#39;FNN&#39; was built under R version 4.4.3</code></pre>
+<pre class="r"><code>library(readxl)</code></pre>
+<pre><code>## Warning: package &#39;readxl&#39; was built under R version 4.4.2</code></pre>
+<pre class="r"><code>COD_dataset &lt;- read_excel(&quot;./CODGames2_mp.xlsx&quot;)</code></pre>
 </div>
 <div id="task-1" class="section level2">
 <h2>Task 1</h2>
@@ -578,16 +579,27 @@ mathematically better with respect to XP gain, is perhaps due to
 relative availability— the bonus might not be available for the majority
 of times when players can actually play.</p>
 </div>
-<div id="fullpartial---thadd" class="section level3">
-<h3>FullPartial - Thadd</h3>
-<p>We are interested in the categorical variable ‘FullPartial’ which
-describes if the player played a full game, or only a partial game.</p>
+<div id="fullpartial-variable-3" class="section level3">
+<h3>FullPartial (Variable 3)</h3>
+<p>We are interested in the categorical variable
+<code>FullPartial</code> which describes if the player played a full
+game, or only a partial game.</p>
+<p>The statistics collected from the rounds recorded contained no NA
+values for FullPartial:</p>
+<pre class="r"><code># Filter: Find the number of NA values in FullPartial
+COD_dataset %&gt;%
+  filter(is.na(FullPartial)) %&gt;%
+  summarize(Number_of_NA = n())</code></pre>
+<pre><code>## # A tibble: 1 × 1
+##   Number_of_NA
+##          &lt;int&gt;
+## 1            0</code></pre>
+<p><strong>Visualization:</strong></p>
 <pre class="r"><code>Cod_FP &lt;- 
   COD_dataset %&gt;%
   select(FullPartial) %&gt;%
   group_by(FullPartial) %&gt;%
   summarize(count = n()) 
-
 
 
 ggplot(data = Cod_FP,
@@ -607,12 +619,14 @@ ggplot(data = Cod_FP,
 ##   &lt;chr&gt;       &lt;int&gt; &lt;chr&gt;           
 ## 1 Full          191 90.52%          
 ## 2 Partial        20 9.48%</code></pre>
-<p>As expected, most players that were surveyed played full games. For
-the players that played partial games, we are still unsure at what point
-they joined the game. Whether that be in the beginning, middle, or end
-of the game. We can only make an inference based on their
-eliminations/deaths/score from that game played on when they could have
-joined the match.</p>
+<p><strong>Analysis:</strong></p>
+<p>Most players that were surveyed in this dataset played full games.
+For the players that played partial games, we are still unsure at what
+point they joined the game (whether that be in the beginning, middle, or
+end of the game, the dataset doesn’t make a distinction). It’s worth
+noting that we might be able to make an inference, based on their
+eliminations/deaths/score from that game played, for what (average)
+percentage of the game partial-game players played though.</p>
 </div>
 <div id="damage-variable-4" class="section level3">
 <h3>Damage (Variable 4)</h3>
@@ -794,7 +808,8 @@ COD_dataset %&gt;%
 <p>Question: y = Result (win or loss), x = Score</p>
 <p><strong>Our Group’s Question:</strong> “How is the score related to
 the result (win/loss)?”</p>
-<p><strong>How to interpret coefficients:</strong></p>
+<div id="suggested-outline" class="section level3">
+<h3>Suggested Outline</h3>
 <p><strong>Step 1: Calculate <code>logit</code>:</strong> Calculate
 logit form (e.g. <span class="math inline">\(\beta_0 + \beta_1
 x_{i,1}\)</span>)</p>
@@ -868,6 +883,7 @@ summary(modelglm)</code></pre>
 <pre><code>## [1] 1.000169</code></pre>
 <p>As a teams score increases by 1 point, we expect the odds of winning
 to change by a factor of 1.000169.</p>
+</div>
 </div>
 
 
