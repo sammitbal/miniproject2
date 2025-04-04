@@ -805,61 +805,23 @@ COD_dataset %&gt;%
 </div>
 <div id="task-4" class="section level2">
 <h2>Task 4</h2>
-<p>Question: y = Result (win or loss), x = Score</p>
-<p><strong>Our Group’s Question:</strong> “How is the score related to
-the result (win/loss)?”</p>
-<div id="suggested-outline" class="section level3">
-<h3>Suggested Outline</h3>
-<p><strong>Step 1: Calculate <code>logit</code>:</strong> Calculate
-logit form (e.g. <span class="math inline">\(\beta_0 + \beta_1
-x_{i,1}\)</span>)</p>
-<p><strong>Step 2: Convert <code>logit</code> to
-<code>odds</code>:</strong> Take <span class="math inline">\(e\)</span>
-to this result (i.e. <span class="math inline">\(e^{\beta_0 + \beta_1
-x_{i,1}} = e^{-????} \approx ????\)</span>)</p>
-<p><strong>Step 3: Interpret the Slope:</strong> As a person’s [insert
-VAR] increases by 1 [insert UNIT], we expect the odds of [insert
-SUCCESS] to change by a factor of [insert FACTOR (ODDS)].</p>
-<ul>
-<li>Note that the explanation reads “change by” rather than “increase
-by” or “decrease by”</li>
-</ul>
-<p><em>Example Interpretation:</em> (In class)</p>
-<p>“As a person’s age increases by 1 year…”</p>
-<ul>
-<li>We expect the odds of surviving to change by <u>a factor of</u>
-0.991.</li>
-<li>We expect the <u>odds of surviving to decrease by</u> 0.9%.</li>
-</ul>
-<p><strong>Step 4 (You can merge this into step 3 if you want): Answer
-the Model Using the Results:</strong> Put the model into context!</p>
-<ol style="list-style-type: decimal">
-<li>Plug in the min/max, averages, and other statistics into the <span class="math inline">\(\beta_0\)</span> and <span class="math inline">\(\beta_1\)</span>s in the equation, and</li>
-<li>Interpret the results. Can you answer the question, even?</li>
-</ol>
-<ul>
-<li><p>NOTE: Part of your grade for this question will be determined
-based on whether your question is a valid question about inference and
-whether your analysis allows you to answer the question.</p></li>
-<li><p>(my note): …meaning you should note &amp; provide explanation if
-the results DON’T allow you to answer the question.</p></li>
-</ul>
-<pre class="r"><code># A glimpse at Score (USED FOR STEP 4)
-COD_dataset %&gt;%
-  select(Score) %&gt;%
-  summarize(min = min(Score),
-    max = max(Score),
-    mean = mean(Score),
-    median = median(Score),
-    sd = sd(Score))</code></pre>
-<pre><code>## # A tibble: 1 × 5
-##     min   max  mean median    sd
-##   &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;  &lt;dbl&gt; &lt;dbl&gt;
-## 1   100  7315 2945.   2770 1465.</code></pre>
-<pre class="r"><code>COD_dataset &lt;- 
+<p><strong>Our Group’s Question:</strong> “Does the Score help predict
+the result of a round (win/loss), where a”loss” includes draws?”</p>
+<p><em>Explanation:</em> Assuming that a player’s score indicates their
+performance, we believe that a higher score would indicate a higher
+performance and therefore a greater likelihood that their team wins.
+This is complicated by conflicting factors such as the fact that score
+might naturally increase regardless of performance as game duration
+increases, though, so some data analysis is needed.</p>
+<div id="step-1-calculate-logit" class="section level4">
+<h4><strong>Step 1: Calculate <code>logit</code>:</strong></h4>
+<pre class="r"><code># Creating indicator variable &quot;WinLossNum&quot;
+COD_dataset &lt;- 
   COD_dataset %&gt;%
-  mutate(WinLossNum = ifelse(WinLoss == &quot;Win&quot;, 1, 0))</code></pre>
-<pre class="r"><code>modelglm &lt;- glm(WinLossNum ~ Score, family = binomial, data = COD_dataset)
+  mutate(WinLossNum = ifelse(WinLoss == &quot;Win&quot;, 1, 0))
+
+# Greating generalized linear regresison model
+modelglm &lt;- glm(WinLossNum ~ Score, family = binomial, data = COD_dataset)
 summary(modelglm)</code></pre>
 <pre><code>## 
 ## Call:
@@ -879,10 +841,92 @@ summary(modelglm)</code></pre>
 ## AIC: 292.06
 ## 
 ## Number of Fisher Scoring iterations: 4</code></pre>
-<pre class="r"><code>exp(1.689e-04)</code></pre>
-<pre><code>## [1] 1.000169</code></pre>
-<p>As a teams score increases by 1 point, we expect the odds of winning
-to change by a factor of 1.000169.</p>
+<ul>
+<li><p><code>Intercept</code> <span class="math inline">\(=
+-0.3324\)</span>, <code>Score</code> <span class="math inline">\(=
+0.0001689\)</span></p></li>
+<li><p><em>Note:</em> In spite of the <code>Pr(&gt;|z|)</code> of the
+Score and Intercept exceeding the <span class="math inline">\(\alpha\)</span> value of <span class="math inline">\(0.05\)</span>, <u>we still will use these
+figures</u>, as an <span class="math inline">\(\alpha\)</span> value of
+<span class="math inline">\(0.05\)</span> is inappropriate for
+predicting categorical variables, and specifically for slope, an <span class="math inline">\(\alpha\)</span> value of <span class="math inline">\(0.15\)</span> or greater would be appropriate, of
+which this probability exceeds (is below).</p></li>
+</ul>
+<p><em>Calculation for <code>logit</code> form:</em></p>
+<p><span class="math display">\[\large{\log(\text{odds}_{WinLoss}) =
+-0.3324 + 0.0001689 \cdot \text{Score}}\]</span></p>
+</div>
+<div id="step-2-convert-logit-to-odds" class="section level4">
+<h4><strong>Step 2: Convert <code>logit</code> to
+<code>odds</code>:</strong></h4>
+<p><span class="math display">\[
+\large{
+\begin{align}
+\text{Odds}_{\text{WinLoss}} = e^{-0.3324 + 0.0001689 \cdot
+\text{Score}}
+\end{align}
+}
+\]</span></p>
+<p><em>Slope:</em> <span class="math inline">\(\large{e^{0.0001689}
+\approx 1.00016891426 (+0.01689\%)}\)</span></p>
+<p><em>Interpretation of</em> <strong><em>ODDS:</em></strong> As a
+person’s Score increases by 1 point, we expect the <u>odds</u> of
+winning to change by a factor of 1.00016891426, meaning that their odds
+of winning <u>increases by 0.01689%</u>.</p>
+</div>
+<div id="step-3-converting-odds-to-probability" class="section level4">
+<h4><strong>Step 3: Converting <code>odds</code> to
+<code>probability</code>:</strong></h4>
+<p><span class="math display">\[
+\large{
+\text{p}_{\text{WinLoss}} = \dfrac{e^{-0.3324 + 0.0001689 \cdot
+\text{Score}}}{1 + e^{-0.3324 + 0.0001689 \cdot \text{Score}}}
+}
+\]</span></p>
+</div>
+<div id="step-4-interpreting-the-results-and-answering-the-question" class="section level4">
+<h4><strong>Step 4: Interpreting the Results and Answering the
+Question:</strong></h4>
+<pre class="r"><code>intercept &lt;- -0.3324
+slope &lt;- 0.0001689
+
+prob_win &lt;- function(Score) exp(intercept + slope * Score) / 
+                            (1 + exp(intercept + slope * Score))
+
+
+# A glimpse at Score
+COD_dataset %&gt;%
+  select(Score) %&gt;%
+  summarize(
+    min = prob_win(min(Score)),
+    max = prob_win(max(Score)),
+    mean = prob_win(mean(Score)),
+    median = prob_win(median(Score)),
+    sd = prob_win(sd(Score)),
+    Q1 = prob_win(quantile(Score, 0.25)),
+    Q3 = prob_win(quantile(Score, 0.75)))</code></pre>
+<pre><code>## # A tibble: 1 × 7
+##     min   max  mean median    sd    Q1    Q3
+##   &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;  &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;
+## 1 0.422 0.712 0.541  0.534 0.479 0.501 0.568</code></pre>
+<p><strong>Interpretation of the Probabilities:</strong> Based on the
+table above— which measures the distributions of winning by aggregating
+the probabilities of winning of each Score— we can see that the majority
+of these summary statistics, starting from the 1st quartile, exceed a
+50% probability of winning the game. Basically, Players in this data
+set’s win rate is pretty high, regardless of their score.</p>
+<p>And while this is an interesting observation, this does not answer
+the question. Rather, the difference between the <code>min()</code>
+Score’s probability of winning versus the <code>Q1</code>,
+<code>mean</code>/<code>median</code>, <code>Q3</code>, and
+<code>max</code> indicates an <u>increase in the chance of winning</u>
+as the score of the Player in this game rises (in comparison to the
+Scores in other games in the data set). Combine that with the
+calculations in Step 2, which suggest And therefore, with reasonable
+certainty, we can answer the question:</p>
+<p>The Score <em>does</em> help predict the result of a round
+(win/loss)— as Score increases, their probability of winning
+increases.</p>
 </div>
 </div>
 
