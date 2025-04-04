@@ -18,7 +18,11 @@ library(readxl)
 COD_dataset <- read_excel("./CODGames2_mp.xlsx")
 ```
 
+**Contributions:**
 
+- *Sammit:* Question 1, 2 variables of Question 2
+- *Thaddeus:* 1 variable of Question 2, Question 4
+- *Jason:* 2 variables of Question 2, Question 3 (+ edited Question 4) >:)
 
 ## Task 1
 
