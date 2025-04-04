@@ -455,6 +455,6 @@ COD_dataset %>%
 
 And while this is an interesting observation, this does not answer the question. Rather, the difference between the `min()` Score's probability of winning versus the `Q1`, `mean`/`median`, `Q3`, and `max` indicates an <u>increase in the chance of winning</u> as the score of the Player in this game rises (in comparison to the Scores in other games in the data set). 
 
-Combine that with the calculations in Step 2, which provides a slope with  And therefore, with reasonable certainty, we can answer the question: 
+Combine that evidence with the calculations in Step 2, which use a slope that <u>significantly exceeds zero</u> (on the scale of Score values, which are in the thousands), and therefore we can answer the question: 
 
 The Score *does* help predict the result of a round (win/loss)--- as Score increases, their probability of winning increases. 
